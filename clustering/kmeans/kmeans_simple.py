@@ -52,8 +52,7 @@ def k_means(data, num_k, max_iterations, distance_measure):
             # determine cluster (index)
             num_cluster = np.argmin(distances_to_cluster_centers)
 
-            # assign the object to the cluster with the most similar cluster 
-            # center
+            # assign the object to the cluster with the most similar cluster center
             clusters[num_cluster].append(object)
 
         # calculate the cluster centers by averaging the cluster elements
@@ -87,15 +86,8 @@ if __name__ == "__main__":
 
     iris = datasets.load_iris()["data"]
 
-    clusters = k_means(iris, 4, None, 100, eucledian_distance)
+    clusters = k_means(iris, 4, 100, eucledian_distance)
 
     print(clusters)
-
-    # k_means = KMeans(n_clusters=4)
-
-    # clusters = k_means.fit_predict(iris)
-
-    # print(clusters)
-
 
 

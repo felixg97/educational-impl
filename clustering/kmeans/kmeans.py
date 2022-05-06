@@ -1,3 +1,6 @@
+import sys
+sys.path.append("../..")
+
 import random
 import numpy as np
 
@@ -52,6 +55,11 @@ class KMeans:
                 # center
                 clusters[num_cluster].append(object)
 
+            # calculate the cluster centers by averaging the cluster elements
+            for cluster in clusters:
+                cluster_mean = np.mean(cluster, axis=0) # takes mean of each column
+                k_means.append(cluster_mean)
+
             # determine if cluster centers have changed
             distances_cluster_centers = []
             for i in range(len(cluster_centers)):
@@ -61,11 +69,7 @@ class KMeans:
             # taking the sum of the elements to determine the overall change
             cluster_change = np.sum(distances_cluster_centers)
 
-            # update the cluster centers by averaging the cluster elements
-            for cluster in clusters:
-                cluster_mean = np.mean(cluster, axis=0) # takes mean of each column
-                k_means.append(cluster_mean)
-
+            # update the cluster centers
             cluster_centers = k_means
 
             if counter == self.max_iter or cluster_change == 0:
@@ -74,7 +78,7 @@ class KMeans:
         return clusters
 
 
-    def fit_predict_with_history(self, data):
+    def fit_predict_with_history(self, data):   
 
         history = []
 
@@ -124,7 +128,7 @@ class KMeans:
             # taking the sum of the elements to determine the overall change
             cluster_change = np.sum(distances_cluster_centers)
             
-            # update the clusters
+            # update the cluster centers
             cluster_centers = k_means
 
 
@@ -139,6 +143,16 @@ class KMeans:
             if counter == self.max_iter or cluster_change == 0:
                 changed = False
             
-        return clusters
+        return history
 
 
+if __name__ == "__main__":
+    from sklearn import datasets
+
+    iris = datasets.load_iris()["data"]
+
+    k_means = KMeans(4, distance_measure="eucledian")
+
+    clusters = k_means.fit_predict_with_history(iris)
+
+    print(clusters)

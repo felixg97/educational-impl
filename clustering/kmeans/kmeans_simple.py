@@ -4,10 +4,6 @@ import random
 import numpy as np
 
 
-# definition of the eucledian distance measure / norm
-#def dist_eucledian(x1, x2):
-    #return np.sqrt(np.sum(np.square(np.subtract(x1, x2))))
-random.seed(12345)
 
 # k-Means cluster algorithm
 def k_means(data, num_k, max_iter):

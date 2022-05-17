@@ -6,7 +6,7 @@ import numpy as np
 
 
 # k-Means cluster algorithm
-def k_means(data, num_k, max_iter):
+def kmeans(data, num_k, max_iter):
 
     # define distance norm
     dist_eucledian = lambda x1, x2: np.sqrt(np.sum(np.square(np.subtract(x1, x2))))
@@ -30,34 +30,34 @@ def k_means(data, num_k, max_iter):
             distances = np.array([])
 
             for center in cluster_centers:
-                #print(dist_eucledian(center, object))
+                # determine similarities to the cluster centers
                 distances = np.append(distances, dist_eucledian(center, object))
 
-            # determine cluster (index)
+            # determine cluster (index) of the most similar cluster center
             num_cluster = np.argmin(distances)
             
             # assign the object to the cluster with the most similar cluster center
             clustering = np.append(clustering, num_cluster)
 
-
-        k_means = np.empty(shape=(len(cluster_centers), len(data[0]))) # new cluster centroids/centers
+        # initialize empty array for new cluster centers (kmeans)
+        kmeans = np.empty(shape=(len(cluster_centers), len(data[0]))) 
 
         # calculate the cluster centers by averaging the cluster elements
         for index in range(len(cluster_centers)):
-            k_means[index] = np.mean(data[np.argwhere(clustering == index)], axis = 0)
+            kmeans[index] = np.mean(data[np.argwhere(clustering == index)], axis = 0)
 
 
         # determine if cluster centers have changed
         distances_cluster_centers = np.array([])
         for i in range(len(cluster_centers)):
-            distance = dist_eucledian(cluster_centers[i], k_means[i])
+            distance = dist_eucledian(cluster_centers[i], kmeans[i])
             distances_cluster_centers = np.append(distances_cluster_centers, distance)
 
         # taking the sum of the elements to determine the overall change
         cluster_change = np.sum(distances_cluster_centers)
         
         # update the clusters
-        cluster_centers = k_means
+        cluster_centers = kmeans
 
         if counter == max_iter or cluster_change == 0:
             changed = False
@@ -72,7 +72,7 @@ if __name__ == "__main__":
 
     iris = datasets.load_iris()["data"]
 
-    clustering = k_means(iris, num_k=3, max_iter=5) 
+    clustering = kmeans(iris, num_k=3, max_iter=5) 
 
     print(clustering)
 

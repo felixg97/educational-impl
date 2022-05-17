@@ -12,7 +12,7 @@ def kmeans(data, num_k, max_iter):
     dist_eucledian = lambda x1, x2: np.sqrt(np.sum(np.square(np.subtract(x1, x2))))
 
     # arbitrarily choose k objects from D as the initial cluster centers
-    cluster_centers = np.array(data[random.sample(range(len(data)), k=num_k)]) # TODO: is there a np func?
+    cluster_centers = np.array(data[random.sample(range(len(data)), k=num_k)])
 
     # repeat until no change
     clustering = None  
@@ -49,8 +49,8 @@ def kmeans(data, num_k, max_iter):
 
         # determine if cluster centers have changed
         distances_cluster_centers = np.array([])
-        for i in range(len(cluster_centers)):
-            distance = dist_eucledian(cluster_centers[i], kmeans[i])
+        for index in range(len(cluster_centers)):
+            distance = dist_eucledian(cluster_centers[index], kmeans[index])
             distances_cluster_centers = np.append(distances_cluster_centers, distance)
 
         # taking the sum of the elements to determine the overall change
